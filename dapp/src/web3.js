@@ -1,6 +1,18 @@
 import Web3 from "web3";
+import Benton from "./abis/Benton.json";
 
 export let web3;
+
+export const getBentonContract = async () => {
+  const networkId = await web3.eth.net.getId();
+  const dentonData = Benton.networks[networkId];
+  if (!dentonData) {
+    return null;
+  }
+
+  const benton = new web3.eth.Contract(Benton.abi, dentonData.address);
+  return benton;
+};
 
 export const getAccount = async () => {
   const accounts = await web3.eth.getAccounts();
